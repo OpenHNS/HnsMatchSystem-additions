@@ -84,7 +84,8 @@ public plugin_cfg() {
 public plugin_natives() {
 	register_native("hns_pts_get_player_info", "native_pts_get_player_info");
 
-	register_native("hns_set_pts", "native_set_pts");
+	register_native("hns_set_pts_tt", "native_set_pts_tt");
+	register_native("hns_set_pts_ct", "native_set_pts_ct");
 }
 
 public native_pts_get_player_info(amxx, params) {
@@ -92,9 +93,14 @@ public native_pts_get_player_info(amxx, params) {
 	return g_ePointsData[get_param(id)][get_param(info)];
 }
 
-public native_set_pts(TeamName:team_winners) {
-	client_print_color(0, print_team_blue, "%s", team_winners);
-	SQL_SetPts(team_winners == TEAM_TERRORIST ? TEAM_TERRORIST : TEAM_CT); // Давай птс
+public native_set_pts_tt() {
+	SQL_SetPts(TEAM_TERRORIST);
+	client_print_color(0, 0, "TEAM_TERRORIST");
+}
+
+public native_set_pts_ct() {
+	SQL_SetPts(TEAM_CT);
+	client_print_color(0, 0, "TEAM_CT");
 }
 
 public hns_sql_player_authorized(id) {
